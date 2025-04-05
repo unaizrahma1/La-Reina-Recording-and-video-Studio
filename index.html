@@ -6,29 +6,44 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>La Reina Entertainment</h1>
-    <p>Your trusted audio & video recording studio</p>
-  </header>
+  <div class="container">
+    <header>
+      <h1>La Reina Entertainments</h1>
+      <p class="tagline">Premium Audio & Video Recording Studio</p>
+    </header>
 
-  <section class="info-section">
-    <h2>About Us</h2>
-    <p>La Reina Entertainment offers high-quality audio and video recording services for artists, podcasters, filmmakers, and businesses. Our state-of-the-art studio rooms are designed to deliver professional-grade recordings tailored to your creative needs.</p>
-  </section>
+    <!-- Navigation Buttons at Top Corner -->
+    <div class="nav-buttons">
+      <button class="nav-btn">🎤 Artist</button>
+      <button class="nav-btn">🏠 Studio</button>
+      <button class="nav-btn">📅 Bookings</button>
+    </div>
 
-  <section class="studio-section">
-    <h2>Studio Rooms</h2>
-    <ul>
-      <li><strong>Studio A:</strong> Audio Recording Room - Ideal for vocalists, instruments, and podcasts</li>
-      <li><strong>Studio B:</strong> Video Production Room - Perfect for green screen shoots, interviews, and content creation</li>
-    </ul>
-  </section>
+    <section class="card" id="about">
+      <h2>🎙️ About Us</h2>
+      <p>We are a professional recording studio dedicated to capturing the sound and vision of creative artists. From music production to video shoots, we provide a quiet, creative environment with high-end equipment.</p>
+    </section>
 
-  <section class="contact-section">
-    <h2>Contact Us</h2>
-    <p><strong>Address:</strong> 123 Creative Lane, Music City</p>
-    <p><strong>Phone:</strong> +123-456-7890</p>
-    <p><strong>Email:</strong> contact@lareinaentertainments.com</p>
-  </section>
+    <section class="card" id="studio">
+      <h2>🏠 Studio Rooms</h2>
+      <div class="studio-rooms">
+        <div class="studio-box">
+          <h3>🎧 Studio A</h3>
+          <p>Acoustic-treated room for high-quality audio recordings. Ideal for music, vocals, and podcasts.</p>
+        </div>
+        <div class="studio-box">
+          <h3>🎬 Studio B</h3>
+          <p>Video recording space with green screen, lighting rigs, and a controlled filming environment.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="contact">
+      <h2>📞 Contact</h2>
+      <p><strong>Location:</strong> 123 Creative Lane, Music City</p>
+      <p><strong>Email:</strong> contact@lareinaentertainments.com</p>
+      <p><strong>Phone:</strong> +123-456-7890</p>
+    </section>
+  </div>
 </body>
 </html>
