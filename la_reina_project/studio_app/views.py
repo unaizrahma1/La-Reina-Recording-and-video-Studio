@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render,  get_object_or_404, redirect
+from django.contrib import messages
 from .models import Artist
 
 def index(request):
@@ -25,7 +26,34 @@ def add_artist(request):
         return redirect('index')
     
     return render(request, 'add_artist.html')
-    
+
 def artist_list(request):
     artists = Artist.objects.all()
     return render(request, 'artist_list.html', {'artists': artists})
+
+# Update artist
+def update_artist(request, id):
+    artist = get_object_or_404(Artist, id=id)
+
+    if request.method == 'POST':
+        artist.name = request.POST.get('name')
+        artist.genre = request.POST.get('genre')
+        artist.bio = request.POST.get('bio')
+        artist.contact = request.POST.get('contact')
+        artist.email = request.POST.get('email')
+
+        if 'image' in request.FILES:
+            artist.image = request.FILES['image']
+
+        artist.save()
+        messages.success(request, 'Artist updated successfully!')
+        return redirect('artist_list')
+
+    return render(request, 'update_artist.html', {'artist': artist})
+
+# Delete artist
+def delete_artist(request, id):
+    artist = get_object_or_404(Artist, id=id)
+    artist.delete()
+    messages.success(request, 'Artist deleted successfully!')
+    return redirect('artist_list')
