@@ -134,8 +134,3 @@ def update_booking(request, booking_id):
 
 
 
-def delete_booking(request, booking_id):
-    booking = get_object_or_404(Booking, id=booking_id)
-    booking.delete()
-    messages.success(request, 'Booking deleted successfully.')
-    return redirect('booking_list')
