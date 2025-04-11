@@ -1,6 +1,7 @@
 from django.shortcuts import render,  get_object_or_404, redirect
 from django.contrib import messages
-from .models import Artist
+from .models import Artist, Booking 
+from datetime import datetime
 
 def index(request):
     artists = Artist.objects.all()
@@ -57,3 +58,30 @@ def delete_artist(request, id):
     artist.delete()
     messages.success(request, 'Artist deleted successfully!')
     return redirect('artist_list')
+
+def add_booking(request):
+    if request.method == 'POST':
+        artist_id = request.POST.get('artist')
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        session_type = request.POST.get('session_type')
+        duration = request.POST.get('duration')
+
+        try:
+            artist = Artist.objects.get(id=artist_id)
+            booking = Booking.objects.create(
+                artist=artist,
+                date=date,
+                time=time,
+                session_type=session_type,
+                duration=duration
+            )
+            messages.success(request, "Booking added successfully!")
+            return redirect('index')  # You can change to a bookings list if needed
+        except Artist.DoesNotExist:
+            messages.error(request, "Selected artist does not exist.")
+        except Exception as e:
+            messages.error(request, f"Error: {str(e)}")
+
+    artists = Artist.objects.all()
+    return render(request, 'add_booking.html', {'artists': artists})
