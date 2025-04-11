@@ -28,9 +28,7 @@ def add_artist(request):
     
     return render(request, 'add_artist.html')
 
-def artist_list(request):
-    artists = Artist.objects.all()
-    return render(request, 'artist_list.html', {'artists': artists})
+
 
 # Update artist
 def update_artist(request, id):
