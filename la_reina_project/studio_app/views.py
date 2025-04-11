@@ -1,7 +1,7 @@
 from django.shortcuts import render,  get_object_or_404, redirect
 from django.contrib import messages
 from .models import Artist, Booking 
-from datetime import datetime
+from datetime import timedelta, datetime
 
 def index(request):
     artists = Artist.objects.all()
@@ -65,9 +65,13 @@ def add_booking(request):
         date = request.POST.get('date')
         time = request.POST.get('time')
         session_type = request.POST.get('session_type')
-        duration = request.POST.get('duration')
+        duration_str = request.POST.get('duration')
 
         try:
+            # Parse duration string (format hh:mm:ss)
+            (hours, minutes, seconds) = map(int, duration_str.split(':'))
+            duration = timedelta(hours=hours, minutes=minutes, seconds=seconds)
+
             artist = Artist.objects.get(id=artist_id)
             booking = Booking.objects.create(
                 artist=artist,
@@ -80,6 +84,8 @@ def add_booking(request):
             return redirect('index')  # You can change to a bookings list if needed
         except Artist.DoesNotExist:
             messages.error(request, "Selected artist does not exist.")
+        except ValueError:
+            messages.error(request, "Duration must be in hh:mm:ss format.")
         except Exception as e:
             messages.error(request, f"Error: {str(e)}")
 
