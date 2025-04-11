@@ -81,7 +81,7 @@ def add_booking(request):
                 duration=duration
             )
             messages.success(request, "Booking added successfully!")
-            return redirect('index')  # You can change to a bookings list if needed
+            return redirect('booking_list')  # You can change to a bookings list if needed
         except Artist.DoesNotExist:
             messages.error(request, "Selected artist does not exist.")
         except ValueError:
