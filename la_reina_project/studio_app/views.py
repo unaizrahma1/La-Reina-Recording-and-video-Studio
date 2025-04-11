@@ -95,3 +95,47 @@ def add_booking(request):
 def booking_list(request):
     bookings = Booking.objects.select_related('artist').order_by('-date', '-time')
     return render(request, 'booking_list.html', {'bookings': bookings})
+
+from datetime import timedelta
+
+def update_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+
+    if request.method == 'POST':
+        booking.artist_id = request.POST.get('artist_id')
+        booking.date = request.POST.get('date')
+        booking.time = request.POST.get('time')
+        booking.session_type = request.POST.get('session_type')
+
+        # Convert string hours to timedelta
+        duration_str = request.POST.get('duration')
+        try:
+            duration_hours = float(duration_str)
+            booking.duration = timedelta(hours=duration_hours)
+        except ValueError:
+            messages.error(request, 'Invalid duration format.')
+            return redirect('update_booking', booking_id=booking_id)
+
+        booking.save()
+        messages.success(request, 'Booking updated successfully.')
+        return redirect('booking_list')
+
+    artists = Artist.objects.all()
+    try:
+        duration_hours = booking.duration.total_seconds() / 3600
+    except AttributeError:
+        duration_hours = booking.duration
+
+    return render(request, 'update_booking.html', {
+        'booking': booking,
+        'artists': artists,
+        'duration_hours': duration_hours,
+    })
+
+
+
+def delete_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+    booking.delete()
+    messages.success(request, 'Booking deleted successfully.')
+    return redirect('booking_list')

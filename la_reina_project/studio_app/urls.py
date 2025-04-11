@@ -9,4 +9,6 @@ urlpatterns = [
     path('artists/delete/<int:id>/', views.delete_artist, name='delete_artist'),
     path('add-booking/', views.add_booking, name='add_booking'),
     path('bookings/', views.booking_list, name='booking_list'),
+    path('booking/update/<int:booking_id>/', views.update_booking, name='update_booking'),
+    path('booking/delete/<int:booking_id>/', views.delete_booking, name='delete_booking'),
 ]
