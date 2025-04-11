@@ -91,3 +91,7 @@ def add_booking(request):
 
     artists = Artist.objects.all()
     return render(request, 'add_booking.html', {'artists': artists})
+
+def booking_list(request):
+    bookings = Booking.objects.select_related('artist').order_by('-date', '-time')
+    return render(request, 'booking_list.html', {'bookings': bookings})
