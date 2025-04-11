@@ -57,3 +57,28 @@ class BookingModelTest(TestCase):
     def test_delete_booking(self):
         self.booking.delete()
         self.assertEqual(Booking.objects.count(), 0)
+
+class IntegrationTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.artist = Artist.objects.create(
+            name="Integration Artist",
+            genre="Rock",
+            bio="Performs rock",
+            contact="1112223333",
+            email="rock@example.com",
+            image="artist_images/rock.jpg"
+        )
+
+    def test_booking_submission(self):
+        response = self.client.post(reverse('add_booking'), {
+            'artist': self.artist.id,
+            'date': '2025-04-20',
+            'time': '14:00',
+            'session_type': 'Practice',
+            'duration': '01:30:00'
+        }, follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Booking added successfully!")
+        self.assertEqual(Booking.objects.count(), 1)
