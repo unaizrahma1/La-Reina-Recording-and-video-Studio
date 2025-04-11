@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Artists - La Reina Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="index-page">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'index' %}">La Reina Studio</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" 
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'artist_list' %}">Artists</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">Bookings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'add_artist' %}">Add Artist</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">Add Booking</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Artists List -->
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h2 class="text-purple fw-bold">Our Talented Artists</h2>
+        <p class="text-muted">Explore the music genres and details of our featured artists.</p>
+    </div>
+
+    <div class="row">
+        {% for artist in artists %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ artist.image.url }}" class="card-img-top" alt="{{ artist.name }}" style="height: 280px; object-fit: cover;">
+                <div class="card-body bg-light text-center">
+                    <h5 class="card-title text-primary fw-bold">{{ artist.name }}</h5>
+                    <p class="card-text text-muted mb-1">{{ artist.genre }}</p>
+                    <p class="card-text">{{ artist.bio|truncatechars:100 }}</p>
+                    <p class="card-text"><strong>Contact:</strong> {{ artist.contact }}</p>
+                    <p class="card-text"><strong>Email:</strong> {{ artist.email }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No artists available at the moment.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

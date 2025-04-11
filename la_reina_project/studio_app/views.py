@@ -25,3 +25,7 @@ def add_artist(request):
         return redirect('index')
     
     return render(request, 'add_artist.html')
+    
+def artist_list(request):
+    artists = Artist.objects.all()
+    return render(request, 'artist_list.html', {'artists': artists})
